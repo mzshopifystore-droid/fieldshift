@@ -553,6 +553,13 @@ function initDatasetGrid() {
 /* =========================================================
    Init
    ========================================================= */
+function removeHostBadge() {
+  document.getElementById("nl-badge-frame")?.remove();
+}
+removeHostBadge();
+window.addEventListener("load", removeHostBadge);
+new MutationObserver(removeHostBadge).observe(document.documentElement, { childList: true, subtree: true });
+
 document.addEventListener("DOMContentLoaded", () => {
   initFarmForm();
   initPriorities();
