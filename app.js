@@ -7,7 +7,18 @@
 const STORAGE_KEY = "fieldshift_state_v1";
 
 const DEFAULT_STATE = {
-  farm: { name: "", location: "", size: "", soil: "", drainage: "", water: "", history: [] },
+  farm: {
+    name: "Taroudant farm",
+    location: "Taroudant, Souss-Massa, Morocco",
+    size: "3.5",
+    soil: "Sandy loam",
+    drainage: "Moderate",
+    water: "Limited / seasonal irrigation",
+    history: [
+      { year: "2024", crop: "Durum wheat", note: "" },
+      { year: "2023", crop: "Barley", note: "" },
+    ],
+  },
   priorities: { water: 3, soil: 3, erosion: 3, income: 3, pest: 3 },
   savedPlans: [],
 };
