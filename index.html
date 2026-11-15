@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fieldshift — Crop Rotation Decision Support</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="icon-btn" id="menuToggle" aria-label="Toggle menu">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    </button>
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32"><path d="M16 2C9 9 6 14 6 19a10 10 0 0020 0c0-5-3-10-10-17z" fill="currentColor"/><path d="M16 11v15" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span>Fieldshift</span>
+    </div>
+  </div>
+  <nav class="topbar-tabs">
+    <button class="tab-link active" data-view="overview">Workspace</button>
+    <button class="tab-link" data-view="data">Data sources</button>
+  </nav>
+  <div class="topbar-right">
+    <span class="location-pill">
+      <svg viewBox="0 0 24 24" width="14" height="14"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7z" fill="currentColor"/></svg>
+      Taroudant, Morocco
+    </span>
+    <span class="lang-pill">EN</span>
+    <span class="avatar">🌾</span>
+  </div>
+</header>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-group">
+      <div class="sidebar-label">Workspace</div>
+      <button class="nav-item active" data-view="overview">
+        <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Overview
+      </button>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-label">Planning</div>
+      <button class="nav-item" data-view="farm">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        Farm profile
+      </button>
+      <button class="nav-item" data-view="priorities">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="14" cy="6" r="2" fill="currentColor"/><circle cx="8" cy="12" r="2" fill="currentColor"/><circle cx="18" cy="18" r="2" fill="currentColor"/></svg>
+        Your priorities
+      </button>
+      <button class="nav-item" data-view="compare">
+        <svg viewBox="0 0 24 24"><path d="M9 3v18M3 7l6-4 6 4M15 17l6-4-6-4M3 7v10a4 4 0 004 4M21 7v10a4 4 0 01-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Compare plans
+      </button>
+      <button class="nav-item" data-view="map">
+        <svg viewBox="0 0 24 24"><path d="M9 3L3 6v15l6-3 6 3 6-3V3l-6 3-6-3z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M9 3v15M15 6v15" stroke="currentColor" stroke-width="1.6"/></svg>
+        Field map
+      </button>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-label">Reference</div>
+      <button class="nav-item" data-view="saved">
+        <svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M9 11h6M9 15h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        Saved plans
+      </button>
+      <button class="nav-item" data-view="data">
+        <svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+        Data sources
+      </button>
+    </div>
+  </aside>
+
+  <main class="content" id="content">
+
+    <!-- OVERVIEW -->
+    <section class="view" id="view-overview">
+      <div class="breadcrumb">Workspace / Overview</div>
+      <div class="hero-row">
+        <div>
+          <h1>Your next season starts here</h1>
+          <p class="muted">Build your farm profile, then explore rotation options grounded in NASA Earth observation data.</p>
+        </div>
+        <span class="badge badge-demo">Demo workspace</span>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head">
+            <h3>Taroudant demo farm</h3>
+            <span class="tag tag-warn" id="setupTag">Setup incomplete</span>
+          </div>
+          <p class="muted small">Souss-Massa, Morocco</p>
+          <p class="small">Add your field details to make the comparison more useful.</p>
+          <ul class="checklist" id="farmChecklist">
+            <li data-check="soil">Soil &amp; drainage <span class="status">Not provided</span></li>
+            <li data-check="water">Water access <span class="status">Not provided</span></li>
+            <li data-check="history">Crop history <span class="status">Not provided</span></li>
+          </ul>
+          <button class="btn btn-primary" data-goto="farm">Continue setup →</button>
+          <p class="hint">You can keep unknown details marked as unknown.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>Climate at a glance</h3>
+          </div>
+          <p class="muted small">Taroudant, Souss-Massa, Morocco · illustrative sample, 2015–2025</p>
+          <div class="stat-row">
+            <div class="stat">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2v14M9 10a3 3 0 106 0" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="12" cy="18" r="3" fill="currentColor"/></svg>
+              <div><b>21.1°C</b><span>Mean temp (Jan–Dec)</span></div>
+            </div>
+            <div class="stat">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 3C8 8 6 11 6 14a6 6 0 0012 0c0-3-2-6-6-11z" fill="currentColor"/></svg>
+              <div><b>223 mm</b><span>Annual rainfall, NASA POWER</span></div>
+            </div>
+          </div>
+          <p class="small">Souss‑Massa basin groundwater trends (GRACE/GRACE‑FO) show long‑term decline — a key driver for water‑conserving rotations here.</p>
+          <button class="btn btn-ghost" data-goto="data">Explore the data →</button>
+        </div>
+      </div>
+
+      <div class="callout">
+        <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 8v5M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <div>
+          <b>Working with a demo</b>
+          <p>Replace the reference curves with your field's own data when ready — the tool works the same way.</p>
+        </div>
+      </div>
+
+      <h2 class="section-title">A simple path to your plan</h2>
+      <div class="grid-3">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h4>Describe your farm</h4>
+          <p class="small">Add soil, water and crop history.</p>
+          <span class="tag" id="stepTag-farm">Not set</span>
+          <button class="link-btn" data-goto="farm">Start step →</button>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h4>Choose your priorities</h4>
+          <p class="small">Tell us what matters most.</p>
+          <span class="tag" id="stepTag-priorities">Not set</span>
+          <button class="link-btn" data-goto="priorities">Set priorities →</button>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h4>Compare your options</h4>
+          <p class="small">Review sequences, evidence and gaps.</p>
+          <span class="tag" id="stepTag-compare">Preview available</span>
+          <button class="link-btn" data-goto="compare">Compare plans →</button>
+        </div>
+      </div>
+
+      <div class="banner">
+        <div>
+          <b>See an example before you start</b>
+          <p class="small">Explore three illustrative rotation plans for the Taroudant demo farm. Examples are not site‑specific recommendations.</p>
+        </div>
+        <button class="btn btn-primary" data-goto="compare">Preview example plans →</button>
+      </div>
+      <p class="footnote">No fields submitted by assessment have been completed.</p>
+    </section>
+
+    <!-- FARM PROFILE -->
+    <section class="view hidden" id="view-farm">
+      <div class="breadcrumb">Workspace / Planning / Farm profile</div>
+      <h1>Describe your farm</h1>
+      <p class="muted">These details tune which rotations make sense for your field. Leave anything blank if unknown — the tool will say so explicitly rather than guess.</p>
+
+      <div class="card form-card">
+        <div class="form-grid">
+          <label>Field name
+            <input type="text" id="f-name" placeholder="e.g. Taroudant demo farm" />
+          </label>
+          <label>Location
+            <input type="text" id="f-location" placeholder="e.g. Taroudant, Souss-Massa, Morocco" />
+          </label>
+          <label>Field size (hectares)
+            <input type="number" id="f-size" min="0" step="0.1" placeholder="e.g. 3.5" />
+          </label>
+          <label>Soil type
+            <select id="f-soil">
+              <option value="">Not provided</option>
+              <option>Sandy</option>
+              <option>Sandy loam</option>
+              <option>Loam</option>
+              <option>Clay loam</option>
+              <option>Clay</option>
+              <option>Rocky / shallow</option>
+            </select>
+          </label>
+          <label>Drainage
+            <select id="f-drainage">
+              <option value="">Not provided</option>
+              <option>Well-drained</option>
+              <option>Moderate</option>
+              <option>Poor / waterlogs easily</option>
+            </select>
+          </label>
+          <label>Water access
+            <select id="f-water">
+              <option value="">Not provided</option>
+              <option>Reliable irrigation</option>
+              <option>Limited / seasonal irrigation</option>
+              <option>Rainfed only</option>
+            </select>
+          </label>
+        </div>
+
+        <h4 class="sub-title">Crop history</h4>
+        <p class="small muted">Add recent seasons so the tool can flag repeated cereals, bare periods, or missing legumes.</p>
+        <div id="cropHistoryList" class="crop-history-list"></div>
+        <div class="form-grid form-grid-add">
+          <input type="text" id="ch-year" placeholder="Year, e.g. 2024" />
+          <input type="text" id="ch-crop" placeholder="Crop, e.g. Durum wheat" />
+          <input type="text" id="ch-note" placeholder="Note (optional)" />
+          <button class="btn btn-ghost" id="addHistoryBtn">+ Add season</button>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" id="saveFarmBtn">Save farm profile</button>
+          <span class="save-confirm" id="farmSaveConfirm"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRIORITIES -->
+    <section class="view hidden" id="view-priorities">
+      <div class="breadcrumb">Workspace / Planning / Your priorities</div>
+      <h1>Choose your priorities</h1>
+      <p class="muted">Weight what matters most for your field. These weights drive how rotation options are scored and ranked — they don't change the underlying evidence.</p>
+
+      <div class="card">
+        <div id="prioritySliders" class="priority-list"></div>
+        <div class="form-actions">
+          <button class="btn btn-primary" id="savePrioritiesBtn">Save priorities</button>
+          <button class="btn btn-ghost" id="resetPrioritiesBtn">Reset to even weights</button>
+          <span class="save-confirm" id="prioritiesSaveConfirm"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPARE -->
+    <section class="view hidden" id="view-compare">
+      <div class="breadcrumb">Workspace / Planning / Compare plans</div>
+      <h1>Compare rotation strategies</h1>
+      <p class="muted">Four rotation options for the Taroudant demo farm, including the existing rotation as a baseline. Scores reflect <em>your</em> saved priorities applied to illustrative crop and field characteristics — not a guarantee of outcomes.</p>
+
+      <div class="compare-toolbar">
+        <span class="small muted">Comparing against priorities: <b id="activePrioritiesSummary">even weights</b></span>
+        <button class="btn btn-ghost" data-goto="priorities">Adjust priorities →</button>
+      </div>
+
+      <div id="radarWrap" class="radar-wrap"></div>
+
+      <div id="strategyCards" class="strategy-cards"></div>
+    </section>
+
+    <!-- FIELD MAP -->
+    <section class="view hidden" id="view-map">
+      <div class="breadcrumb">Workspace / Planning / Field map</div>
+      <h1>Illustrative field map</h1>
+      <p class="muted">A schematic field grid, not satellite imagery, for exploring how zones of risk could shift under different rainfall and temperature scenarios. Treat as a conversation starter, not a measurement.</p>
+
+      <div class="map-layout">
+        <div class="card map-controls">
+          <h4>Risk layer</h4>
+          <div class="radio-group" id="layerPicker">
+            <label><input type="radio" name="layer" value="erosion" checked /> Erosion risk</label>
+            <label><input type="radio" name="layer" value="water" /> Water stress</label>
+            <label><input type="radio" name="layer" value="frost" /> Frost risk</label>
+          </div>
+          <h4>Scenario sliders</h4>
+          <label class="slider-label">Rainfall change
+            <input type="range" id="rainSlider" min="-50" max="50" value="0" />
+            <span id="rainSliderVal">0%</span>
+          </label>
+          <label class="slider-label">Temperature change
+            <input type="range" id="tempSlider" min="-3" max="5" step="0.5" value="0" />
+            <span id="tempSliderVal">+0.0°C</span>
+          </label>
+          <p class="hint">Sliders apply a simple illustrative adjustment to the base zone values — not a climate model.</p>
+        </div>
+        <div class="card map-canvas-card">
+          <svg id="fieldMap" viewBox="0 0 400 300"></svg>
+          <div class="legend" id="mapLegend"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SAVED PLANS -->
+    <section class="view hidden" id="view-saved">
+      <div class="breadcrumb">Workspace / Reference / Saved plans</div>
+      <h1>Saved plans</h1>
+      <p class="muted">Bookmark a rotation strategy from the comparison view to revisit it here.</p>
+      <div id="savedPlansList" class="saved-plans-list"></div>
+    </section>
+
+    <!-- DATA SOURCES -->
+    <section class="view hidden" id="view-data">
+      <div class="breadcrumb">Reference / Data sources &amp; methods</div>
+      <h1>Data sources &amp; methods</h1>
+      <p class="muted">This prototype uses illustrative sample values standing in for the NASA datasets below. A production build would pull each from its live API on the same analysis grid.</p>
+
+      <h2 class="section-title">NASA Earth observation datasets</h2>
+      <div class="grid-3" id="datasetGrid"></div>
+
+      <h2 class="section-title">Key terms</h2>
+      <div class="glossary" id="glossaryList"></div>
+
+      <h2 class="section-title">Satellite vs. ground measurements</h2>
+      <div class="card">
+        <p class="small">Satellite records (like SMAP soil moisture or ECOSTRESS land‑surface temperature) give consistent, wide‑area coverage but at coarser resolution and with indirect retrievals. Ground sensors and farmer observation are precise locally but sparse in space and time. Combining both — resampling satellite layers to a common grid and anchoring them with local readings — gives more trustworthy signals than either alone.</p>
+      </div>
+
+      <h2 class="section-title">How the comparison works</h2>
+      <div class="card">
+        <p class="small">Each candidate crop carries illustrative scores (0–5) across water demand, nitrogen fixing, erosion reduction, organic matter contribution, market value, frost tolerance, and pest‑cycle disruption. A rotation's score is the weighted average of its crops' scores against your saved priority weights. This is a transparent heuristic, not a calibrated agronomic model — it is meant to surface options and trade‑offs worth discussing with a local agronomist, not to replace that judgment.</p>
+      </div>
+
+      <div class="callout callout-warn">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2L1 21h22L12 2z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M12 9v5M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <div>
+          <b>This tool supports — it does not replace — local expertise</b>
+          <p>Every rotation card lists risks and information gaps that need review by the farmer and local agricultural experts before acting on them.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
